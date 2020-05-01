@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>게시물리스트</title>
+<title>안녕</title>
 </head>
 <body>
 	게시물 리스트입니다
