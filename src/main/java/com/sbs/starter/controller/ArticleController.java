@@ -37,7 +37,7 @@ public class ArticleController {
 	@RequestMapping("/article/doAdd") //=>articleDAO =>articleService 에서 처리한다
 	@ResponseBody   //@ResponseBody일 경우 : 직접 "메인화면입니다"가 나온다.
 	public String doAdd(@RequestParam Map<String, Object> param) { //String title, String Body
-		articleService.add(param);  //long newId = articleService.add(param);
-		return "게시물이 추가되었습니다"; //"article/add";   //
+		long newId= articleService.add(param);  //long newId = articleService.add(param);
+		return newId+ "번 게시물이 추가되었습니다"; //"article/add";   //
 	}
 }
