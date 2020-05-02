@@ -18,10 +18,16 @@ public class ArticleController {
 	ArticleService articleService;
 	
 	@RequestMapping("/article/list")
-	public String showList(Model aModel) {	//처음에는 ("") 이었음: 
+	public String showList(Model aModel) {	//초기에는 ("") 이었음: 
 		List<Article> list = articleService.getList(); 
 		aModel.addAttribute("list", list);
 		//request.setAttribute("list", list)와 똑같은 표현!!
 		return "article/list";   ////@ResponseBody일 경우 : 직접 "메인화면입니다"가 나온다.
+	}
+	
+	@RequestMapping("/article/add")
+	public String showAdd() {	
+
+		return "article/add";   ////@ResponseBody일 경우 : 직접 "메인화면입니다"가 나온다.
 	}
 }
