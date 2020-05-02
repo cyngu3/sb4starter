@@ -28,6 +28,13 @@ public class ArticleController {
 		return "article/detail";
 	}
 	
+	@RequestMapping("/article/modify") //아래 list 복사하여 datail 만듬.
+	public String showModify(Model model, long id) {
+		Article article = articleService.getOne(id);
+		model.addAttribute("article",article);
+		return "article/modify";
+	}
+	
 	@RequestMapping("/article/list") ///@ResponseBody일 경우 : 직접 "메인화면입니다"가 나온다.
 	public String showList(Model model) {	//초기에는 ("") 이었음: 
 		List<Article> list = articleService.getList();
@@ -60,7 +67,7 @@ public class ArticleController {
 	}
 	
 	@RequestMapping("/article/doDelete") //=>articleDAO =>articleService 에서 처리한다
-	@ResponseBody   //@ResponseBody일 경우 : 직접 "메인화면입니다"가 나온다.
+	@ResponseBody   //직접 "메인화면입니다"가 나온다.
 	public String doDelete(long id) { //String title, String Body
 		articleService.delete(id);  //long newId = articleService.add(param);
 		
