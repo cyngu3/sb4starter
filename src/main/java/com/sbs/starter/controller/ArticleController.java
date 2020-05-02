@@ -66,6 +66,22 @@ public class ArticleController {
 		// sb.append("location.replace('./detail?id="+ newId+"');");
 	}
 	
+	@RequestMapping("/article/doModify") //=>articleDAO =>articleService 에서 처리한다
+	@ResponseBody   //@ResponseBody일 경우 : 직접 "메인화면입니다"가 나온다.
+	public String doModify(@RequestParam Map<String, Object> param,long id) { //String title, String Body
+		articleService.modify(param);  //long newId = articleService.modify(param);
+		
+		String msg= id+ "번 게시물이 수정되었습니다";
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append("alert('"+ msg + "');");
+		sb.append("location.replace('./detail?id=" + id + "');");  //위에 새로detail추가하여 연결
+		sb.insert(0, "<script>");
+		sb.append("</script>");
+		return sb.toString();	//"article/add";
+		// sb.append("location.replace('./detail?id="+ newId+"');");
+	}
+	
 	@RequestMapping("/article/doDelete") //=>articleDAO =>articleService 에서 처리한다
 	@ResponseBody   //직접 "메인화면입니다"가 나온다.
 	public String doDelete(long id) { //String title, String Body
