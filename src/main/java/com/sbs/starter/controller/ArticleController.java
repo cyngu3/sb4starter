@@ -21,11 +21,25 @@ public class ArticleController {
 	@Autowired		//:@Service를 만나서 진행:
 	ArticleService articleService;
 	
+	@RequestMapping("/article/detail") //아래 list 복사하여 datail 만듬.
+	public String showDetail(Model model, long id) {
+		Article article = articleService.getOne(id);
+		model.addAttribute("article",article);
+		//List<Article> list = articleService.getList();
+		//int totalCount = articleService.getTotalCount();
+		//aModel.addAttribute("list", list); 	//request.setAttribute("list", list)와 똑같은 표현!!
+		//aModel.addAttribute("totalCount", totalCount);  //""안의 이름으로 list.jsp에서 표현된다.
+		
+		return "article/detail";
+	}
+	
 	@RequestMapping("/article/list") ///@ResponseBody일 경우 : 직접 "메인화면입니다"가 나온다.
-	public String showList(Model aModel) {	//초기에는 ("") 이었음: 
-		List<Article> list = articleService.getList(); 
-		aModel.addAttribute("list", list);
-		//request.setAttribute("list", list)와 똑같은 표현!!
+	public String showList(Model model) {	//초기에는 ("") 이었음: 
+		List<Article> list = articleService.getList();
+		int totalCount = articleService.getTotalCount();
+		model.addAttribute("list", list); 	//request.setAttribute("list", list)와 똑같은 표현!!
+		model.addAttribute("totalCount", totalCount);  //""안의 이름으로 list.jsp에서 표현된다.
+		
 		return "article/list";
 	}
 	
@@ -38,6 +52,15 @@ public class ArticleController {
 	@ResponseBody   //@ResponseBody일 경우 : 직접 "메인화면입니다"가 나온다.
 	public String doAdd(@RequestParam Map<String, Object> param) { //String title, String Body
 		long newId= articleService.add(param);  //long newId = articleService.add(param);
-		return newId+ "번 게시물이 추가되었습니다"; //"article/add";   //
+		
+		String msg= newId+ "번 게시물이 추가되었습니다";
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append("alert('"+ msg + "');");
+		sb.append("location.replace('./detail?id=" + newId + "');");  //위에 새로detail추가하여 연결
+		sb.insert(0, "<script>");
+		sb.append("</script>");
+		return sb.toString();	//"article/add";
+		// sb.append("location.replace('./detail?id="+ newId+"');");
 	}
 }
