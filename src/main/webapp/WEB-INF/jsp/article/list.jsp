@@ -6,6 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="/resource/common.css">
 <title>커뮤니티 사이트 - 게시 리스트</title>
 </head>
 <body>

@@ -25,11 +25,6 @@ public class ArticleController {
 	public String showDetail(Model model, long id) {
 		Article article = articleService.getOne(id);
 		model.addAttribute("article",article);
-		//List<Article> list = articleService.getList();
-		//int totalCount = articleService.getTotalCount();
-		//aModel.addAttribute("list", list); 	//request.setAttribute("list", list)와 똑같은 표현!!
-		//aModel.addAttribute("totalCount", totalCount);  //""안의 이름으로 list.jsp에서 표현된다.
-		
 		return "article/detail";
 	}
 	
@@ -58,6 +53,22 @@ public class ArticleController {
 		StringBuilder sb = new StringBuilder();
 		sb.append("alert('"+ msg + "');");
 		sb.append("location.replace('./detail?id=" + newId + "');");  //위에 새로detail추가하여 연결
+		sb.insert(0, "<script>");
+		sb.append("</script>");
+		return sb.toString();	//"article/add";
+		// sb.append("location.replace('./detail?id="+ newId+"');");
+	}
+	
+	@RequestMapping("/article/doDelete") //=>articleDAO =>articleService 에서 처리한다
+	@ResponseBody   //@ResponseBody일 경우 : 직접 "메인화면입니다"가 나온다.
+	public String doDelete(long id) { //String title, String Body
+		articleService.delete(id);  //long newId = articleService.add(param);
+		
+		String msg= id+ "번 게시물이 삭제되었습니다";
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append("alert('"+ msg + "');");
+		sb.append("location.replace('./list');");  //위에 새로detail추가하여 연결
 		sb.insert(0, "<script>");
 		sb.append("</script>");
 		return sb.toString();	//"article/add";
