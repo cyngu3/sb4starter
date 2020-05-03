@@ -24,6 +24,9 @@ public class ArticleController {
 	@RequestMapping("/article/detail") //아래 list 복사하여 datail 만듬.
 	public String showDetail(Model model, long id) {
 		Article article = articleService.getOne(id);
+		
+		articleService.hitUp(id); 
+		
 		model.addAttribute("article",article);
 		return "article/detail";
 	}
