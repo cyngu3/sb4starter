@@ -14,7 +14,6 @@ public interface MemberService {
 	public Member getOne(long loginedMemberId);
 	
 	//Map<String, Object> checkLoginIdDup(String string);
-
 	//Member getOne(long loginedMemberId);
 
 }

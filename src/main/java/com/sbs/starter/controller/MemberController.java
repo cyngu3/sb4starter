@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @Slf4j // 이걸 해야 log.info(..) 가 가능, 디버깅 용도
 public class MemberController {
-	@Autowired
+	@Autowired //@Autowired  ///:@Service를 만나서 진행:
 	MemberService memberService;
 
 	@RequestMapping("/member/login")
@@ -29,8 +29,7 @@ public class MemberController {
 	@RequestMapping("/member/doLogout")
 	public String doLogout(HttpSession session) {
 		session.removeAttribute("loginedMemberId");
-
-		return "redirect:/";
+		return "redirect:/";	//=> main.jsp
 	}
 
 	@RequestMapping("/member/doLogin")
@@ -43,11 +42,12 @@ public class MemberController {
 			model.addAttribute("historyBack", true);
 			return "common/redirect";
 		}
-
-		session.setAttribute("loginedMemberId", matchedMember.getId());
-
-		model.addAttribute("alertMsg", "로그인 되었습니다.");
+		// 해당 로그인 회원의 번호로 DB에서 회원의 정체 정보를 불러오는데 (거의 모든 액션에서 이것을 반복해서 해줘야 하는 것을 여기서 처리)
+		session.setAttribute("loginedMemberId", matchedMember.getId()); ////로그인 했는지 체크하고
+		
+		model.addAttribute("alertMsg", " 로그인 되었습니다.");
 		model.addAttribute("redirectUrl", "/");
+		log.info("cy_ck id="+matchedMember.getId()+", loginId="+(String)param.get("loginId"));
 		return "common/redirect";
 	}
 
@@ -82,27 +82,3 @@ public class MemberController {
 	}
 }
 
-//@Controller
-//@Slf4j
-//public class MemberController {
-//	@Autowired  ///:@Service를 만나서 진행:
-//	MemberService memberService;
-	
-//	@RequestMapping("/member/join")
-//	public String showJoin() {
-//		return "member/join";
-//	}
-	
-	//@RequestMapping("/member/doJoin") 	//@ResponseBody
-	//public String doJoin(@RequestParam Map<String,Object> param, Model model) {
-		//로그인ID의 중복 체크
-	//	Map<String, Object> checkLoginIdDupRs = memberService.checkLoginIdDup((String) param.get("loginId"));
-		
-	//	if (((String) checkLoginIdDupRs.get("resultCode")).startsWith("F-")) {
-	//		model.addAttribute("alertMsg", checkLoginIdDupRs.get("msg"));
-	//		model.addAttribute("historyBack", true);
-	//		return "common/redirect";
-	//	}
-	//	return "common/redirect";
-	//}
-//}

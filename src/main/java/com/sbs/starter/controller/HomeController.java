@@ -15,13 +15,13 @@ public class HomeController {
 	@Autowired
 	MemberService memberService;
 
-	@RequestMapping("/home/main")
-	public String showMain(Model model) {
-		return "home/main";
+	@RequestMapping("/home/main")		  //(public String ShowMain(HttpSession session,Model model)
+	public String showMain(Model model) { //if (session.getAttribute("loginedMemberId) != null) {
+		return "home/main";				  //로그인 체크: long loginedMemberId= (long)session.getAttribute("loginedMemberId"); } 
 	}
 
 	@RequestMapping("/")
-	public String showMain2() {
+	public String showMain2() {		//(HttpSession session)
 		return "redirect:/home/main";
 	}
 }
